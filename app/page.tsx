@@ -218,17 +218,23 @@ export default function Home() {
 
   return (
     <main className="min-h-screen" style={{ background: "var(--dark-blue)" }}>
+      {/* ── STICKY NAVBAR ── */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "py-2 shadow-2xl" : "py-4"
+          scrolled
+            ? "py-2 shadow-2xl"
+            : "py-4"
         }`}
         style={{
-          background: scrolled ? "rgba(10, 15, 30, 0.97)" : "rgba(10, 15, 30, 0.75)",
+          background: scrolled
+            ? "rgba(10, 15, 30, 0.97)"
+            : "rgba(10, 15, 30, 0.75)",
           backdropFilter: "blur(16px)",
           borderBottom: scrolled ? "1px solid rgba(201, 168, 76, 0.25)" : "none",
         }}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          {/* Logo */}
           <a href="#" className="flex items-center gap-3 group">
             <div
               className="relative overflow-hidden rounded-full"
@@ -239,47 +245,621 @@ export default function Home() {
                 outlineOffset: "2px",
               }}
             >
-              <Image src={LOGO_URL} alt="Ummu Dufail Beauty Logo" fill sizes="52px" className="object-cover group-hover:scale-110 transition-transform duration-300" priority />
+              <Image
+                src={LOGO_URL}
+                alt="Ummu Dufail Beauty Logo"
+                fill
+                sizes="52px"
+                className="object-cover group-hover:scale-110 transition-transform duration-300"
+                priority
+              />
             </div>
-            <span className="text-lg font-semibold tracking-widest uppercase hidden sm:block" style={{ color: "var(--gold)", letterSpacing: "0.18em" }}>Ummu Dufail</span>
+            <span
+              className="text-lg font-semibold tracking-widest uppercase hidden sm:block"
+              style={{ color: "var(--gold)", letterSpacing: "0.18em" }}
+            >
+              Ummu Dufail
+            </span>
           </a>
+
+          {/* Desktop Nav Links */}
           <ul className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <li key={link}>
-                <a href="#" className="text-sm tracking-widest uppercase transition-colors duration-300 hover:opacity-100" style={{ color: link === "Home" ? "var(--gold)" : "rgba(245,240,232,0.65)", letterSpacing: "0.15em" }}>{link}</a>
+                <a
+                  href="#"
+                  className="text-sm tracking-widest uppercase transition-colors duration-300 hover:opacity-100"
+                  style={{
+                    color: link === "Home" ? "var(--gold)" : "rgba(245,240,232,0.65)",
+                    letterSpacing: "0.15em",
+                  }}
+                  onMouseEnter={(e) =>
+                    ((e.target as HTMLElement).style.color = "var(--gold)")
+                  }
+                  onMouseLeave={(e) =>
+                    ((e.target as HTMLElement).style.color =
+                      link === "Home" ? "var(--gold)" : "rgba(245,240,232,0.65)")
+                  }
+                >
+                  {link}
+                </a>
               </li>
             ))}
           </ul>
+
+          {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
-            <button className="px-6 py-2 text-xs uppercase tracking-widest font-semibold rounded-full" style={{ background: "linear-gradient(135deg, #c9a84c, #e8c97a)", color: "var(--dark-blue)" }}>Shop Now</button>
+            <button
+              className="px-6 py-2 text-xs uppercase tracking-widest font-semibold rounded-full transition-all duration-300 hover:scale-105"
+              style={{
+                background: "linear-gradient(135deg, #c9a84c, #e8c97a)",
+                color: "var(--dark-blue)",
+                boxShadow: "0 4px 20px rgba(201,168,76,0.35)",
+              }}
+            >
+              Shop Now
+            </button>
           </div>
+
+          {/* Mobile menu toggle */}
+          <button
+            className="md:hidden flex flex-col gap-1.5 p-2"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span
+              className="block w-6 h-0.5 transition-all duration-300"
+              style={{
+                background: "var(--gold)",
+                transform: menuOpen ? "rotate(45deg) translate(4px, 4px)" : "none",
+              }}
+            />
+            <span
+              className="block w-6 h-0.5 transition-all duration-300"
+              style={{
+                background: "var(--gold)",
+                opacity: menuOpen ? 0 : 1,
+              }}
+            />
+            <span
+              className="block w-6 h-0.5 transition-all duration-300"
+              style={{
+                background: "var(--gold)",
+                transform: menuOpen ? "rotate(-45deg) translate(4px, -4px)" : "none",
+              }}
+            />
+          </button>
+        </div>
+
+        {/* Mobile Menu Dropdown */}
+        <div
+          className="md:hidden overflow-hidden transition-all duration-300"
+          style={{ maxHeight: menuOpen ? "300px" : "0" }}
+        >
+          <ul
+            className="px-6 py-4 flex flex-col gap-4"
+            style={{ borderTop: "1px solid rgba(201,168,76,0.2)" }}
+          >
+            {navLinks.map((link) => (
+              <li key={link}>
+                <a
+                  href="#"
+                  className="text-sm tracking-widest uppercase"
+                  style={{ color: "rgba(245,240,232,0.8)" }}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link}
+                </a>
+              </li>
+            ))}
+            <li>
+              <button
+                className="w-full py-2 text-xs uppercase tracking-widest font-semibold rounded-full"
+                style={{
+                  background: "linear-gradient(135deg, #c9a84c, #e8c97a)",
+                  color: "var(--dark-blue)",
+                }}
+              >
+                Shop Now
+              </button>
+            </li>
+          </ul>
         </div>
       </nav>
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ paddingTop: "80px" }}>
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.08) 0%, transparent 65%), radial-gradient(ellipse at 20% 80%, rgba(10,40,90,0.5) 0%, transparent 60%), linear-gradient(180deg, #0a0f1e 0%, #0d1528 50%, #0a0f1e 100%)" }} />
+
+      {/* ── HERO SECTION ── */}
+      <section
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        style={{ paddingTop: "80px" }}
+      >
+        {/* Background gradient layers */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.08) 0%, transparent 65%), radial-gradient(ellipse at 20% 80%, rgba(10,40,90,0.5) 0%, transparent 60%), linear-gradient(180deg, #0a0f1e 0%, #0d1528 50%, #0a0f1e 100%)",
+          }}
+        />
+
+        {/* Decorative orbs */}
+        <div
+          className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full opacity-10 blur-3xl"
+          style={{ background: "radial-gradient(circle, #c9a84c, transparent)" }}
+        />
+        <div
+          className="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full opacity-8 blur-3xl"
+          style={{ background: "radial-gradient(circle, #1a3a6b, transparent)" }}
+        />
+
+        {/* Decorative corner lines */}
+        <div className="absolute top-24 left-8 w-24 h-24 opacity-20" style={{ borderLeft: "1px solid #c9a84c", borderTop: "1px solid #c9a84c" }} />
+        <div className="absolute top-24 right-8 w-24 h-24 opacity-20" style={{ borderRight: "1px solid #c9a84c", borderTop: "1px solid #c9a84c" }} />
+        <div className="absolute bottom-16 left-8 w-24 h-24 opacity-20" style={{ borderLeft: "1px solid #c9a84c", borderBottom: "1px solid #c9a84c" }} />
+        <div className="absolute bottom-16 right-8 w-24 h-24 opacity-20" style={{ borderRight: "1px solid #c9a84c", borderBottom: "1px solid #c9a84c" }} />
+
+        {/* Hero Content */}
         <div className="relative z-10 text-center px-6 max-w-5xl mx-auto fade-in-up">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6" style={{ fontFamily: "Georgia, serif" }}><span style={{ color: "#f5f0e8" }}>Ummu Dufail </span><br /><span className="gold-shimmer">Beauty</span></h1>
-          <p className="text-xl sm:text-2xl font-light mb-6 italic" style={{ color: "rgba(245,240,232,0.85)" }}>&ldquo;The Pride of Your Home&rdquo;</p>
+          {/* Eyebrow tag */}
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <div className="h-px w-12" style={{ background: "var(--gold)" }} />
+            <span
+              className="text-xs uppercase tracking-widest font-medium"
+              style={{ color: "var(--gold)", letterSpacing: "0.3em" }}
+            >
+              Luxury Beauty
+            </span>
+            <div className="h-px w-12" style={{ background: "var(--gold)" }} />
+          </div>
+
+          {/* Main Headline */}
+          <h1
+            className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            <span style={{ color: "#f5f0e8" }}>Ummu Dufail </span>
+            <br />
+            <span className="gold-shimmer">Beauty</span>
+          </h1>
+
+          {/* Tagline */}
+          <p
+            className="text-xl sm:text-2xl lg:text-3xl font-light mb-6 tracking-wide"
+            style={{
+              color: "rgba(245,240,232,0.85)",
+              fontFamily: "Georgia, serif",
+              fontStyle: "italic",
+            }}
+          >
+            &ldquo;The Pride of Your Home&rdquo;
+          </p>
+
+          {/* Subtitle */}
+          <p
+            className="text-base sm:text-lg max-w-2xl mx-auto mb-12 leading-relaxed"
+            style={{ color: "rgba(245,240,232,0.55)" }}
+          >
+            Discover a curated collection of luxurious skincare rituals — born from nature, refined by tradition, and crafted to honour the beauty within you.
+          </p>
+
+          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="px-10 py-4 text-sm uppercase tracking-widest font-semibold rounded-full" style={{ background: "linear-gradient(135deg, #c9a84c, #e8c97a)", color: "#0a0f1e" }}>Explore Products</button>
+            <button
+              className="px-10 py-4 text-sm uppercase tracking-widest font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              style={{
+                background: "linear-gradient(135deg, #c9a84c, #e8c97a)",
+                color: "#0a0f1e",
+                boxShadow: "0 8px 30px rgba(201,168,76,0.4)",
+              }}
+            >
+              Explore Products
+            </button>
+            <button
+              className="px-10 py-4 text-sm uppercase tracking-widest font-semibold rounded-full transition-all duration-300 hover:scale-105"
+              style={{
+                border: "1px solid rgba(201,168,76,0.5)",
+                color: "var(--gold)",
+                background: "transparent",
+              }}
+              onMouseEnter={(e) => {
+                const t = e.currentTarget;
+                t.style.background = "rgba(201,168,76,0.1)";
+              }}
+              onMouseLeave={(e) => {
+                const t = e.currentTarget;
+                t.style.background = "transparent";
+              }}
+            >
+              Read the Blog
+            </button>
+          </div>
+
+          {/* Stats */}
+          <div className="mt-20 grid grid-cols-3 gap-6 max-w-lg mx-auto">
+            {[
+              { value: "100%", label: "Natural" },
+              { value: "15+", label: "Products" },
+              { value: "✦", label: "Luxury" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <p
+                  className="text-2xl font-bold mb-1"
+                  style={{ color: "var(--gold)" }}
+                >
+                  {stat.value}
+                </p>
+                <p
+                  className="text-xs uppercase tracking-widest"
+                  style={{ color: "rgba(245,240,232,0.45)" }}
+                >
+                  {stat.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+          <span className="text-xs uppercase tracking-widest" style={{ color: "var(--gold)" }}>
+            Scroll
+          </span>
+          <div
+            className="w-px h-10 animate-pulse"
+            style={{ background: "linear-gradient(to bottom, var(--gold), transparent)" }}
+          />
+        </div>
       </section>
-      <section id="blog" className="py-24 px-6">
+
+      {/* ── GOLD DIVIDER ── */}
+      <div className="gold-divider" />
+
+      {/* ── FEATURE STRIP ── */}
+      <section
+        className="py-6 overflow-hidden"
+        style={{ background: "rgba(201,168,76,0.05)" }}
+      >
+        <div className="flex gap-12 items-center justify-center flex-wrap px-6">
+          {[
+            "✦ Natural Ingredients",
+            "✦ Luxury Formulas",
+            "✦ Heritage Traditions",
+            "✦ Crafted with Love",
+            "✦ Skin-First Beauty",
+          ].map((item) => (
+            <span
+              key={item}
+              className="text-xs uppercase tracking-widest whitespace-nowrap"
+              style={{ color: "rgba(201,168,76,0.7)", letterSpacing: "0.2em" }}
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* ── GOLD DIVIDER ── */}
+      <div className="gold-divider" />
+
+      {/* ── BLOG SECTION ── */}
+      <section id="blog" className="py-24 px-6" style={{ background: "var(--dark-blue)" }}>
         <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-px w-16" style={{ background: "var(--gold)" }} />
+              <span
+                className="text-xs uppercase tracking-widest"
+                style={{ color: "var(--gold)", letterSpacing: "0.3em" }}
+              >
+                Beauty Journal
+              </span>
+              <div className="h-px w-16" style={{ background: "var(--gold)" }} />
+            </div>
+            <h2
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
+              style={{ color: "#f5f0e8", fontFamily: "Georgia, serif" }}
+            >
+              Latest from the{" "}
+              <span className="gold-shimmer">Blog</span>
+            </h2>
+            <p
+              className="text-base max-w-xl mx-auto"
+              style={{ color: "rgba(245,240,232,0.5)" }}
+            >
+              Skincare stories, beauty rituals, and product spotlights — written for those who believe beauty is a lifestyle.
+            </p>
+          </div>
+
+          {/* Blog Cards Grid — multi-row, responsive */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {blogPosts.map((post) => (
-              <article key={post.id} className="product-card rounded-2xl overflow-hidden" style={{ background: "var(--card-bg)", border: "1px solid var(--border-gold)" }}>
-                <div className="relative h-64"><Image src={post.image} alt={post.product} fill className="object-cover" /></div>
+            {blogPosts.map((post, index) => (
+              <article
+                key={post.id}
+                className="product-card rounded-2xl overflow-hidden cursor-pointer"
+                style={{
+                  background: "var(--card-bg)",
+                  border: "1px solid var(--border-gold)",
+                  animationDelay: `${index * 0.05}s`,
+                }}
+              >
+                {/* Image */}
+                <div className="relative overflow-hidden" style={{ height: "260px" }}>
+                  <Image
+                    src={post.image}
+                    alt={post.product}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                    className="object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                  {/* Gradient overlay */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(10,15,30,0.85) 0%, transparent 50%)",
+                    }}
+                  />
+                  {/* Tag badge */}
+                  <span
+                    className="absolute top-4 left-4 px-3 py-1 text-xs uppercase tracking-widest font-semibold rounded-full"
+                    style={{
+                      background: "rgba(201,168,76,0.2)",
+                      color: "var(--gold)",
+                      border: "1px solid rgba(201,168,76,0.4)",
+                      backdropFilter: "blur(8px)",
+                    }}
+                  >
+                    {post.tag}
+                  </span>
+                </div>
+
+                {/* Content */}
                 <div className="p-6">
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: "#f5f0e8" }}>{post.title}</h3>
-                  <p className="text-sm mb-4" style={{ color: "rgba(245,240,232,0.5)" }}>{post.excerpt}</p>
+                  {/* Meta */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <span
+                      className="text-xs"
+                      style={{ color: "rgba(245,240,232,0.4)" }}
+                    >
+                      {post.date}
+                    </span>
+                    <span
+                      className="w-1 h-1 rounded-full"
+                      style={{ background: "var(--gold)", opacity: 0.5 }}
+                    />
+                    <span
+                      className="text-xs"
+                      style={{ color: "rgba(245,240,232,0.4)" }}
+                    >
+                      {post.readTime}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3
+                    className="text-base font-semibold mb-3 leading-snug line-clamp-2"
+                    style={{
+                      color: "#f5f0e8",
+                      fontFamily: "Georgia, serif",
+                    }}
+                  >
+                    {post.title}
+                  </h3>
+
+                  {/* Excerpt */}
+                  <p
+                    className="text-sm leading-relaxed line-clamp-3 mb-5"
+                    style={{ color: "rgba(245,240,232,0.5)" }}
+                  >
+                    {post.excerpt}
+                  </p>
+
+                  {/* Read More */}
+                  <div className="flex items-center gap-2 group">
+                    <span
+                      className="text-xs uppercase tracking-widest font-semibold transition-colors duration-200"
+                      style={{ color: "var(--gold)" }}
+                    >
+                      Read More
+                    </span>
+                    <svg
+                      className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-1"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#c9a84c"
+                      strokeWidth="2"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </div>
                 </div>
               </article>
             ))}
           </div>
+
+          {/* View All Button */}
+          <div className="text-center mt-14">
+            <button
+              className="px-12 py-4 text-sm uppercase tracking-widest font-semibold rounded-full transition-all duration-300 hover:scale-105"
+              style={{
+                border: "1px solid rgba(201,168,76,0.45)",
+                color: "var(--gold)",
+                background: "transparent",
+              }}
+              onMouseEnter={(e) => {
+                const t = e.currentTarget;
+                t.style.background = "rgba(201,168,76,0.08)";
+                t.style.boxShadow = "0 0 30px rgba(201,168,76,0.15)";
+              }}
+              onMouseLeave={(e) => {
+                const t = e.currentTarget;
+                t.style.background = "transparent";
+                t.style.boxShadow = "none";
+              }}
+            >
+              View All Posts
+            </button>
+          </div>
         </div>
       </section>
+
+      {/* ── GOLD DIVIDER ── */}
+      <div className="gold-divider" />
+
+      {/* ── ABOUT / BRAND STATEMENT ── */}
+      <section
+        className="py-24 px-6"
+        style={{ background: "var(--mid-blue)" }}
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="h-px w-16" style={{ background: "var(--gold)" }} />
+            <span
+              className="text-xs uppercase tracking-widest"
+              style={{ color: "var(--gold)", letterSpacing: "0.3em" }}
+            >
+              Our Story
+            </span>
+            <div className="h-px w-16" style={{ background: "var(--gold)" }} />
+          </div>
+
+          <h2
+            className="text-3xl sm:text-4xl font-bold mb-8"
+            style={{ color: "#f5f0e8", fontFamily: "Georgia, serif" }}
+          >
+            Where <span className="gold-shimmer">Tradition</span> Meets{" "}
+            <span className="gold-shimmer">Luxury</span>
+          </h2>
+
+          <p
+            className="text-base sm:text-lg leading-loose mb-8"
+            style={{ color: "rgba(245,240,232,0.6)", fontStyle: "italic" }}
+          >
+            &ldquo;At Ummu Dufail Beauty, every product is a love letter to your skin — rooted in ancestral wisdom and elevated for the modern woman. We believe beauty is not a mask, but a mirror of the soul.&rdquo;
+          </p>
+
+          <div
+            className="inline-block w-12 h-px"
+            style={{ background: "var(--gold)" }}
+          />
+          <p
+            className="mt-4 text-sm tracking-widest uppercase"
+            style={{ color: "var(--gold)" }}
+          >
+            — Ummu Dufail
+          </p>
+        </div>
+      </section>
+
+      {/* ── GOLD DIVIDER ── */}
+      <div className="gold-divider" />
+
+      {/* ── NEWSLETTER ── */}
+      <section className="py-20 px-6" style={{ background: "var(--dark-blue)" }}>
+        <div className="max-w-2xl mx-auto text-center">
+          <p
+            className="text-xs uppercase tracking-widest mb-4"
+            style={{ color: "var(--gold)", letterSpacing: "0.3em" }}
+          >
+            Stay in the Loop
+          </p>
+          <h2
+            className="text-2xl sm:text-3xl font-bold mb-4"
+            style={{ color: "#f5f0e8", fontFamily: "Georgia, serif" }}
+          >
+            Join the <span className="gold-shimmer">Beauty Circle</span>
+          </h2>
+          <p
+            className="text-sm mb-8"
+            style={{ color: "rgba(245,240,232,0.5)" }}
+          >
+            Get exclusive tips, product launches, and beauty rituals delivered straight to your inbox.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="Your email address"
+              className="flex-1 px-5 py-3 rounded-full text-sm outline-none"
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(201,168,76,0.3)",
+                color: "#f5f0e8",
+              }}
+            />
+            <button
+              className="px-8 py-3 text-xs uppercase tracking-widest font-semibold rounded-full whitespace-nowrap transition-all duration-300 hover:scale-105"
+              style={{
+                background: "linear-gradient(135deg, #c9a84c, #e8c97a)",
+                color: "#0a0f1e",
+                boxShadow: "0 4px 20px rgba(201,168,76,0.35)",
+              }}
+            >
+              Subscribe
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer
+        className="py-10 px-6"
+        style={{
+          background: "#060a14",
+          borderTop: "1px solid rgba(201,168,76,0.15)",
+        }}
+      >
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+          {/* Logo & Name */}
+          <div className="flex items-center gap-3">
+            <div
+              className="relative overflow-hidden rounded-full"
+              style={{ width: 38, height: 38 }}
+            >
+              <Image
+                src={LOGO_URL}
+                alt="Ummu Dufail Beauty"
+                fill
+                sizes="38px"
+                className="object-cover"
+              />
+            </div>
+            <span
+              className="text-sm font-semibold tracking-widest uppercase"
+              style={{ color: "var(--gold)" }}
+            >
+              Ummu Dufail Beauty
+            </span>
+          </div>
+
+          {/* Footer Links */}
+          <div className="flex gap-6">
+            {["Privacy", "Terms", "Contact", "Blog"].map((link) => (
+              <a
+                key={link}
+                href="#"
+                className="text-xs uppercase tracking-widest transition-colors duration-200"
+                style={{ color: "rgba(245,240,232,0.35)" }}
+                onMouseEnter={(e) =>
+                  ((e.target as HTMLElement).style.color = "var(--gold)")
+                }
+                onMouseLeave={(e) =>
+                  ((e.target as HTMLElement).style.color = "rgba(245,240,232,0.35)")
+                }
+              >
+                {link}
+              </a>
+            ))}
+          </div>
+
+          {/* Copyright */}
+          <p
+            className="text-xs"
+            style={{ color: "rgba(245,240,232,0.25)" }}
+          >
+            © 2026 Ummu Dufail Beauty. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }
