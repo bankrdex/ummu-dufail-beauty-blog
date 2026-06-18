@@ -206,13 +206,6 @@ const blogPosts = [
 
 const navLinks = ["Home", "Products", "Blog", "About", "Contact"];
 
-const socialLinks = [
-  { name: "Instagram", url: "https://www.instagram.com/ummu_dufail_gyaran_jiki?igsh=enc2bXo5ZjBpNTM3" },
-  { name: "TikTok", url: "https://www.tiktok.com/@ummudufail1?_r=1&_t=ZS-97IkDyp73Q1" },
-  { name: "Facebook", url: "https://www.facebook.com/anklemuhammad.bauchi" },
-  { name: "Links", url: "https://heylink.me/Ummudufail" }
-];
-
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -379,12 +372,26 @@ export default function Home() {
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
         style={{ paddingTop: "80px" }}
       >
-        {/* Background gradient layers */}
+        {/* Product Image Background — low-opacity, blurred for luxurious depth */}
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="https://customer-assets.emergentagent.com/wingman/df668041-a6ae-41f8-a2f0-f06e756a3cce/attachments/cd1fa9ee96b34e6db1a45f946eb1e330_image.bin"
+            alt=""
+            aria-hidden="true"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            style={{ opacity: 0.17, filter: "blur(3px) saturate(0.65)" }}
+            priority
+          />
+        </div>
+
+        {/* Background gradient overlay */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.08) 0%, transparent 65%), radial-gradient(ellipse at 20% 80%, rgba(10,40,90,0.5) 0%, transparent 60%), linear-gradient(180deg, #0a0f1e 0%, #0d1528 50%, #0a0f1e 100%)",
+              "radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.08) 0%, transparent 65%), radial-gradient(ellipse at 20% 80%, rgba(10,40,90,0.5) 0%, transparent 60%), linear-gradient(180deg, rgba(10,15,30,0.86) 0%, rgba(13,21,40,0.80) 50%, rgba(10,15,30,0.86) 100%)",
           }}
         />
 
@@ -809,58 +816,62 @@ export default function Home() {
 
       {/* ── FOOTER ── */}
       <footer
-        className="py-12 px-6"
+        className="py-10 px-6"
         style={{
           background: "#060a14",
           borderTop: "1px solid rgba(201,168,76,0.15)",
         }}
       >
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
-          {/* Column 1: Logo & Name */}
-          <div className="flex flex-col items-center md:items-start gap-4">
-            <div className="flex items-center gap-3">
-              <div className="relative overflow-hidden rounded-full" style={{ width: 44, height: 44 }}>
-                <Image src={LOGO_URL} alt="Ummu Dufail Beauty" fill sizes="44px" className="object-cover" />
-              </div>
-              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: "var(--gold)" }}>Ummu Dufail</span>
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+          {/* Logo & Name */}
+          <div className="flex items-center gap-3">
+            <div
+              className="relative overflow-hidden rounded-full"
+              style={{ width: 38, height: 38 }}
+            >
+              <Image
+                src={LOGO_URL}
+                alt="Ummu Dufail Beauty"
+                fill
+                sizes="38px"
+                className="object-cover"
+              />
             </div>
-            <p className="text-xs max-w-xs text-center md:text-left" style={{ color: "rgba(245,240,232,0.35)" }}>
-              Natural ingredients, luxury formulas, and heritage traditions crafted for your most radiant glow.
-            </p>
+            <span
+              className="text-sm font-semibold tracking-widest uppercase"
+              style={{ color: "var(--gold)" }}
+            >
+              Ummu Dufail Beauty
+            </span>
           </div>
 
-          {/* Column 2: Social Links */}
-          <div className="flex flex-col items-center gap-6">
-            <span className="text-xs uppercase tracking-[0.3em] font-medium" style={{ color: "var(--gold)" }}>Connect With Us</span>
-            <div className="flex flex-wrap justify-center gap-6">
-              {socialLinks.map((social) => (
-                <a 
-                  key={social.name} 
-                  href={social.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-xs uppercase tracking-widest transition-all duration-300 hover:scale-110"
-                  style={{ color: "rgba(245,240,232,0.6)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--gold)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,240,232,0.6)")}
-                >
-                  {social.name}
-                </a>
-              ))}
-            </div>
+          {/* Footer Links */}
+          <div className="flex gap-6">
+            {["Privacy", "Terms", "Contact", "Blog"].map((link) => (
+              <a
+                key={link}
+                href="#"
+                className="text-xs uppercase tracking-widest transition-colors duration-200"
+                style={{ color: "rgba(245,240,232,0.35)" }}
+                onMouseEnter={(e) =>
+                  ((e.target as HTMLElement).style.color = "var(--gold)")
+                }
+                onMouseLeave={(e) =>
+                  ((e.target as HTMLElement).style.color = "rgba(245,240,232,0.35)")
+                }
+              >
+                {link}
+              </a>
+            ))}
           </div>
 
-          {/* Column 3: Navigation & Legal */}
-          <div className="flex flex-col items-center md:items-end gap-4">
-            <div className="flex gap-6">
-              {["Privacy", "Terms", "Contact"].map((link) => (
-                <a key={link} href="#" className="text-xs uppercase tracking-widest" style={{ color: "rgba(245,240,232,0.35)" }}>{link}</a>
-              ))}
-            </div>
-            <p className="text-xs" style={{ color: "rgba(245,240,232,0.25)" }}>
-              © 2026 Ummu Dufail Beauty. All rights reserved.
-            </p>
-          </div>
+          {/* Copyright */}
+          <p
+            className="text-xs"
+            style={{ color: "rgba(245,240,232,0.25)" }}
+          >
+            © 2026 Ummu Dufail Beauty. All rights reserved.
+          </p>
         </div>
       </footer>
     </main>
