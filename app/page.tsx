@@ -204,7 +204,20 @@ const blogPosts = [
   },
 ];
 
-const navLinks = ["Home", "Products", "Blog", "About", "Contact"];
+const navLinks = [
+  { label: "Home", href: "#" },
+  { label: "Products", href: "#blog" },
+  { label: "Blog", href: "#blog" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
+];
+
+const socialLinks = [
+  { name: "Instagram", url: "https://www.instagram.com/ummu_dufail_gyaran_jiki?igsh=enc2bXo5ZjBpNTM3" },
+  { name: "TikTok", url: "https://www.tiktok.com/@ummudufail1?_r=1&_t=ZS-97IkDyp73Q1" },
+  { name: "Facebook", url: "https://www.facebook.com/anklemuhammad.bauchi" },
+  { name: "Links", url: "https://heylink.me/Ummudufail" }
+];
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -265,12 +278,12 @@ export default function Home() {
           {/* Desktop Nav Links */}
           <ul className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <li key={link}>
+              <li key={link.label}>
                 <a
-                  href="#"
+                  href={link.href}
                   className="text-sm tracking-widest uppercase transition-colors duration-300 hover:opacity-100"
                   style={{
-                    color: link === "Home" ? "var(--gold)" : "rgba(245,240,232,0.65)",
+                    color: link.label === "Home" ? "var(--gold)" : "rgba(245,240,232,0.65)",
                     letterSpacing: "0.15em",
                   }}
                   onMouseEnter={(e) =>
@@ -278,10 +291,10 @@ export default function Home() {
                   }
                   onMouseLeave={(e) =>
                     ((e.target as HTMLElement).style.color =
-                      link === "Home" ? "var(--gold)" : "rgba(245,240,232,0.65)")
+                      link.label === "Home" ? "var(--gold)" : "rgba(245,240,232,0.65)")
                   }
                 >
-                  {link}
+                  {link.label}
                 </a>
               </li>
             ))}
@@ -341,14 +354,14 @@ export default function Home() {
             style={{ borderTop: "1px solid rgba(201,168,76,0.2)" }}
           >
             {navLinks.map((link) => (
-              <li key={link}>
+              <li key={link.label}>
                 <a
-                  href="#"
+                  href={link.href}
                   className="text-sm tracking-widest uppercase"
                   style={{ color: "rgba(245,240,232,0.8)" }}
                   onClick={() => setMenuOpen(false)}
                 >
-                  {link}
+                  {link.label}
                 </a>
               </li>
             ))}
@@ -722,6 +735,7 @@ export default function Home() {
 
       {/* ── ABOUT / BRAND STATEMENT ── */}
       <section
+        id="about"
         className="py-24 px-6"
         style={{ background: "var(--mid-blue)" }}
       >
@@ -769,7 +783,7 @@ export default function Home() {
       <div className="gold-divider" />
 
       {/* ── NEWSLETTER ── */}
-      <section className="py-20 px-6" style={{ background: "var(--dark-blue)" }}>
+      <section id="contact" className="py-20 px-6" style={{ background: "var(--dark-blue)" }}>
         <div className="max-w-2xl mx-auto text-center">
           <p
             className="text-xs uppercase tracking-widest mb-4"
